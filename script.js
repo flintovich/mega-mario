@@ -92,6 +92,10 @@ window.onload = function(){
                         [402,178]
                     ]);
                 break;
+            default :
+                spriteXd = 385;
+                spriteYd = 149;
+
         }
 
         // Проверка на то, что Марио находится на координатах дерева
@@ -189,23 +193,19 @@ window.onload = function(){
         switch(keycode){
             case 38 :
                 moveMan = false;
-                spriteXd = 385;
-                spriteYd = 149;
+                moveItem('default', 1, 1);
                 break;
             case 40 :
                 moveMan = false;
-                spriteXd = 385;
-                spriteYd = 149;
+                moveItem('default', 1, 1);
                 break;
             case 37 :
                 moveMan = false;
-                spriteXd = 385;
-                spriteYd = 149;
+                moveItem('default', 1, 1);
                 break;
             case 39 :
                 moveMan = false;
-                spriteXd = 385;
-                spriteYd = 149;
+                moveItem('default', 1, 1);
                 break;
         }
     }
