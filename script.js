@@ -43,7 +43,6 @@ window.onload = function(){
         this.positionOnCanvas_X = positionOnCanvas_X;
         this.positionOnCanvas_Y = positionOnCanvas_Y;
     }
-
     function moveItem(direction, count, spriteCount){
         // Очистка координат Марио
         ctx.clearRect(positionOnMapX,positionOnMapY,widthd,heightd);
@@ -54,6 +53,7 @@ window.onload = function(){
                 (function move(SpritesCount, positions){
                     spriteXd = positions[i][0];
                     spriteYd = positions[i][1];
+                    if(positionOnMapX+manData.width>=ctx.canvas.width) return false;
                     positionOnMapX++
                 })(spriteCount,[
                         [311,122],
@@ -65,6 +65,7 @@ window.onload = function(){
                 (function move(SpritesCount, positions){
                     spriteXd = positions[i][0];
                     spriteYd = positions[i][1];
+                    if(positionOnMapX<=0) return false;
                     positionOnMapX--
                 })(spriteCount,[
                         [296,122],
@@ -76,6 +77,7 @@ window.onload = function(){
                 (function move(SpritesCount, positions){
                     spriteXd = positions[i][0];
                     spriteYd = positions[i][1];
+                    if(positionOnMapY<=0) return false;
                     positionOnMapY--
                 })(spriteCount,[
                         [410,122],
@@ -86,6 +88,7 @@ window.onload = function(){
                 (function move(SpritesCount, positions){
                     spriteXd = positions[i][0];
                     spriteYd = positions[i][1];
+                    if(positionOnMapY+manData.height>=ctx.canvas.height) return false;
                     positionOnMapY++
                 })(spriteCount,[
                         [385,178],
@@ -108,11 +111,11 @@ window.onload = function(){
                 ){
                 // Если Марио находится перед деревом
                 if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
-                    createTrees(6,5, 160,140);
+                    createTrees(4,4, 200,180);
                     CreateMan(manData);
                 } else {
                     CreateMan(manData);
-                    createTrees(6,5, 160,140);
+                    createTrees(4,4, 200,180);
                 }
                 break;
             } else {
@@ -139,14 +142,14 @@ window.onload = function(){
         treesItems = [];
         for(var i=0; i<countX; i++){
             for(var k=0; k<countY; k++){
-                ctx.drawImage(sprite, 440, 299, 66, 100, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30, 66, 100);
-                treesItems.push( new ItemData(66,100, 440,299, i*distanceBtwTreesX-k*20,k*distanceBtwTreesY-i*30) );
+                ctx.drawImage(sprite, 440, 299, 66, 100, i*distanceBtwTreesX+k*20, k*distanceBtwTreesY-i*60, 66, 100);
+                treesItems.push( new ItemData(66,100, 440,299, i*distanceBtwTreesX+k*20,k*distanceBtwTreesY-i*60) );
             }
         }
     }
 
     // LOAD
-    createTrees(6,5, 160,140);
+    createTrees(4,4, 200,180);
     CreateMan(manData);
 
     // Главный цикл игры
