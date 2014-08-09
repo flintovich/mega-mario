@@ -2,6 +2,9 @@ window.onload = function(){
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
 
+    // Переменные уровней
+    var presenceTrees = true;
+
     /* Dynamic variables */
     var widthd = 16;
     var heightd = 27;
@@ -23,7 +26,7 @@ window.onload = function(){
     /* move Mario data END*/
 
     var treesItems = []; // Масив с данными деревьев
-    var beforeTrees = false;
+
 
     window.requestAnimFrame = (function(){
         return window.requestAnimationFrame ||
@@ -101,26 +104,31 @@ window.onload = function(){
 
         }
 
-        // Проверка на то, что Марио находится на координатах дерева
-        for(var k=0; k<treesItems.length; k++){
-            // Если Марио за деревом, то отрисовываем его первого
-            if( treesItems[k].positionOnCanvas_Y <= manData.positionOnCanvas_Y+manData.height &&
-                treesItems[k].positionOnCanvas_Y+treesItems[k].height >= manData.positionOnCanvas_Y &&
-                treesItems[k].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
-                treesItems[k].positionOnCanvas_X+treesItems[k].width >= manData.positionOnCanvas_X
-                ){
-                // Если Марио находится перед деревом
-                if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
-                    createTrees(4,4, 200,180);
-                    CreateMan(manData);
+        // Если деревья включены
+        if(presenceTrees){
+            // Проверка на то, что Марио находится на координатах дерева
+            for(var k=0; k<treesItems.length; k++){
+                // Если Марио за деревом, то отрисовываем его первого
+                if( treesItems[k].positionOnCanvas_Y <= manData.positionOnCanvas_Y+manData.height &&
+                    treesItems[k].positionOnCanvas_Y+treesItems[k].height >= manData.positionOnCanvas_Y &&
+                    treesItems[k].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
+                    treesItems[k].positionOnCanvas_X+treesItems[k].width >= manData.positionOnCanvas_X
+                    ){
+                    // Если Марио находится перед деревом
+                    if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
+                        createTrees(4,4, 200,180);
+                        CreateMan(manData);
+                    } else {
+                        CreateMan(manData);
+                        createTrees(4,4, 200,180);
+                    }
+                    break;
                 } else {
                     CreateMan(manData);
-                    createTrees(4,4, 200,180);
                 }
-                break;
-            } else {
-                CreateMan(manData);
             }
+        } else {
+            CreateMan(manData);
         }
 
     }
@@ -148,9 +156,6 @@ window.onload = function(){
         }
     }
 
-    // LOAD
-    createTrees(4,4, 200,180);
-    CreateMan(manData);
 
     // Главный цикл игры
     function loop(e){
@@ -212,5 +217,12 @@ window.onload = function(){
                 break;
         }
     }
+
+
+
+    // LOAD GAME
+    if(presenceTrees) createTrees(4,4, 200,180);
+
+    CreateMan(manData);
 
 };
