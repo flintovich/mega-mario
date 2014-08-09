@@ -1,4 +1,4 @@
-mega-mario
+Mega Mario
 ==========
 
 Mega Mario

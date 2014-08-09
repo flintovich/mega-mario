@@ -11,6 +11,7 @@ window.onload = function(){
     var positionOnMapY = 150;
     /* Dynamic variables END*/
 
+    /* move Mario data */
     var moveMan = false;
     var moveDirection;
     var spriteCount = 3;
@@ -19,8 +20,10 @@ window.onload = function(){
         moveDirection = moveDirectionData;
         spriteCount = spriteCountData;
     }
+    /* move Mario data END*/
 
-    var treesItems = [];
+    var treesItems = []; // Масив с данными деревьев
+    var beforeTrees = false;
 
     window.requestAnimFrame = (function(){
         return window.requestAnimationFrame ||
@@ -91,6 +94,17 @@ window.onload = function(){
                 break;
         }
 
+
+        if(beforeTrees){
+            createTrees(6,5, 160,140); // Марио относительно дерева
+            CreateMan(manData); // Отрисовка главного персонажа, сохранение данных
+
+        } else {
+            CreateMan(manData); // Отрисовка главного персонажа, сохранение данных
+            createTrees(6,5, 160,140); // Марио относительно дерева
+        }
+        treesAndMarioPosition();
+
     }
 
     // Отрисовка главного персонажа
@@ -107,6 +121,7 @@ window.onload = function(){
 
     // Отрисовка деревьев
     function createTrees(countX,countY, distanceBtwTreesX,distanceBtwTreesY){
+        treesItems = [];
         for(var i=0; i<countX; i++){
             for(var k=0; k<countY; k++){
                 ctx.drawImage(sprite, 440, 299, 66, 100, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30, 66, 100);
@@ -114,38 +129,32 @@ window.onload = function(){
             }
         }
     }
+    function treesAndMarioPosition(){
+        // Перебераем все деревья
+        for(var i=0; i<treesItems.length; i++){
+            // Если Марио за деревом, то отрисовываем его первого
+            if( treesItems[i].positionOnCanvas_Y+treesItems[i].height >= manData.positionOnCanvas_Y &&
+                treesItems[i].positionOnCanvas_Y+treesItems[i].height <= manData.positionOnCanvas_Y+manData.height &&
+                treesItems[i].positionOnCanvas_X <= manData.positionOnCanvas_X &&
+                treesItems[i].positionOnCanvas_X+treesItems[i].width >= manData.positionOnCanvas_X+manData.width ){
+                beforeTrees = true;
+                break;
+            } else {
+                beforeTrees = false;
+            }
+        }
+    }
+
+    createTrees(6,5, 160,140);
 
     // Главный цикл игры
-    var beforeTree = false;
     function loop(e){
-
         var loopCount = parseInt(e/150);
 
         // Движение и данные главного персонажа
         if(moveMan) moveItem(moveDirection, loopCount, spriteCount);
 
-        for(var i=0; i<treesItems.length; i++){
-            if( treesItems[i].positionOnCanvas_Y+treesItems[i].height >= manData.positionOnCanvas_Y &&
-                treesItems[i].positionOnCanvas_Y+treesItems[i].height <= manData.positionOnCanvas_Y+manData.height &&
-                treesItems[i].positionOnCanvas_X <= manData.positionOnCanvas_X &&
-                treesItems[i].positionOnCanvas_X+treesItems[i].width >= manData.positionOnCanvas_X+manData.width ){
-                beforeTree = false;
-                break;
-            } else {
-                beforeTree = true
-            }
-        }
-        if(beforeTree){
-            // Отрисовка главного персонажа, сохранение данных
-            CreateMan(manData);
-            // Отрисовка деревьев, сохранение данных
-            createTrees(8,5, 120,140);
-        } else {
-            // Отрисовка деревьев, сохранение данных
-            createTrees(8,5, 120,140);
-            // Отрисовка главного персонажа, сохранение данных
-            CreateMan(manData);
-        }
+
     }
     (function animationLoop(e){
         loop(e);
