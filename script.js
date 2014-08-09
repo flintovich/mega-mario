@@ -7,8 +7,8 @@ window.onload = function(){
     var heightd = 27;
     var spriteXd = 385;
     var spriteYd = 149;
-    var positionOnMapX = 150;
-    var positionOnMapY = 150;
+    var positionOnMapX = 100;
+    var positionOnMapY = 140;
     /* Dynamic variables END*/
 
     /* move Mario data */
@@ -94,16 +94,27 @@ window.onload = function(){
                 break;
         }
 
-
-        if(beforeTrees){
-            createTrees(6,5, 160,140); // Марио относительно дерева
-            CreateMan(manData); // Отрисовка главного персонажа, сохранение данных
-
-        } else {
-            CreateMan(manData); // Отрисовка главного персонажа, сохранение данных
-            createTrees(6,5, 160,140); // Марио относительно дерева
+        // Проверка на то, что Марио находится на координатах дерева
+        for(var k=0; k<treesItems.length; k++){
+            // Если Марио за деревом, то отрисовываем его первого
+            if( treesItems[k].positionOnCanvas_Y <= manData.positionOnCanvas_Y+manData.height &&
+                treesItems[k].positionOnCanvas_Y+treesItems[k].height >= manData.positionOnCanvas_Y &&
+                treesItems[k].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
+                treesItems[k].positionOnCanvas_X+treesItems[k].width >= manData.positionOnCanvas_X
+                ){
+                // Если Марио находится перед деревом
+                if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
+                    createTrees(6,5, 160,140);
+                    CreateMan(manData);
+                } else {
+                    CreateMan(manData);
+                    createTrees(6,5, 160,140);
+                }
+                break;
+            } else {
+                CreateMan(manData);
+            }
         }
-        treesAndMarioPosition();
 
     }
 
@@ -129,23 +140,10 @@ window.onload = function(){
             }
         }
     }
-    function treesAndMarioPosition(){
-        // Перебераем все деревья
-        for(var i=0; i<treesItems.length; i++){
-            // Если Марио за деревом, то отрисовываем его первого
-            if( treesItems[i].positionOnCanvas_Y+treesItems[i].height >= manData.positionOnCanvas_Y &&
-                treesItems[i].positionOnCanvas_Y+treesItems[i].height <= manData.positionOnCanvas_Y+manData.height &&
-                treesItems[i].positionOnCanvas_X <= manData.positionOnCanvas_X &&
-                treesItems[i].positionOnCanvas_X+treesItems[i].width >= manData.positionOnCanvas_X+manData.width ){
-                beforeTrees = true;
-                break;
-            } else {
-                beforeTrees = false;
-            }
-        }
-    }
 
+    // LOAD
     createTrees(6,5, 160,140);
+    CreateMan(manData);
 
     // Главный цикл игры
     function loop(e){
@@ -153,8 +151,6 @@ window.onload = function(){
 
         // Движение и данные главного персонажа
         if(moveMan) moveItem(moveDirection, loopCount, spriteCount);
-
-
     }
     (function animationLoop(e){
         loop(e);
