@@ -2,10 +2,12 @@ window.onload = function(){
     var canvas = document.getElementById('game');
     var ctx = canvas.getContext('2d');
     var canvasBg = document.getElementById('texture');
-    var ctxBg = canvasBg.getContext('2d');
+    var ctxBg = gameApp.ctxBg();
     var gameDataSection = document.getElementById('gameData');
     var ctxGameData = gameDataSection.getContext('2d');
-
+    function addText(ctx,text,x,y,size){
+        return gameApp.addText(ctx,text,x,y,size);
+    }
     // Переменные уровней
     var presenceTrees = true;
 
@@ -41,15 +43,6 @@ window.onload = function(){
             };
     })();
 
-    // Конструктор для создания сущностей
-    function ItemData(width, height, spriteX, spriteY, positionOnCanvas_X, positionOnCanvas_Y){
-        this.width = width;
-        this.height = height;
-        this.spriteX = spriteX;
-        this.spriteY = spriteY;
-        this.positionOnCanvas_X = positionOnCanvas_X;
-        this.positionOnCanvas_Y = positionOnCanvas_Y;
-    }
     function moveItem(direction, count, spriteCount){
         // Очистка координат Марио
         ctx.clearRect(positionOnMapX,positionOnMapY,widthd,heightd);
@@ -138,7 +131,7 @@ window.onload = function(){
     // Отрисовка главного персонажа
     var sprite = new Image();
     sprite.src = 'images/sprite.png';
-    var manData = new ItemData(widthd, heightd, spriteXd, spriteYd, positionOnMapX, positionOnMapY);
+    var manData = new gameApp.ItemData(widthd, heightd, spriteXd, spriteYd, positionOnMapX, positionOnMapY);
     function CreateMan(Data){
         Data.spriteX = spriteXd;
         Data.spriteY = spriteYd;
@@ -153,7 +146,7 @@ window.onload = function(){
         for(var i=0; i<countX; i++){
             for(var k=0; k<countY; k++){
                 ctxBg.drawImage(sprite, 440, 299, 66, 100, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30, 66, 100);
-                treesItems.push( new ItemData(66,100, 440,299, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30) );
+                treesItems.push( new gameApp.ItemData(66,100, 440,299, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30) );
             }
         }
     }
@@ -230,16 +223,10 @@ window.onload = function(){
     /*******************************************
      * game dada section
      ******************************************/
-    function addText(ctx,text,x,y,size){
-        ctx.font = size+'px Verdana';
-        ctx.fillStyle = "#eee";
-        ctx.fillText(text,x,y, 150);
-        ctx.textAlign = "left";
-        ctx.textBaseline = "bottom";
-    }
+
 
     addText(ctxGameData,'Mega Mario Game',8,30,16);
-    addText(ctxGameData,'Level:',8,70,13);
+    addText(ctxGameData,'Level: '+gameApp.level,8,70,13);
     addText(ctxGameData,'Score:',8,90,13);
     addText(ctxGameData,'Health:',8,110,13);
     ctxGameData.drawImage(sprite, 373, 299, 54, 47, 100, 45, 54, 47);
