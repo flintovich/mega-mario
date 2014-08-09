@@ -1,6 +1,8 @@
 window.onload = function(){
-    var canvas = document.getElementById('canvas');
+    var canvas = document.getElementById('game');
     var ctx = canvas.getContext('2d');
+    var canvasBg = document.getElementById('texture');
+    var ctxBg = canvasBg.getContext('2d');
 
     // Переменные уровней
     var presenceTrees = true;
@@ -114,16 +116,14 @@ window.onload = function(){
                     treesItems[k].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
                     treesItems[k].positionOnCanvas_X+treesItems[k].width >= manData.positionOnCanvas_X
                     ){
-                    // Если Марио находится перед деревом
-                    if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
-                        createTrees(4,4, 200,180);
-                        CreateMan(manData);
-                    } else {
-                        CreateMan(manData);
-                        createTrees(4,4, 200,180);
-                    }
+                    canvasBg.style.zIndex = 1;
+                        // Если Марио находится перед деревом
+                        if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
+                            canvasBg.style.zIndex = "";
+                        }
                     break;
                 } else {
+                    canvasBg.style.zIndex = "";
                     CreateMan(manData);
                 }
             }
@@ -150,8 +150,8 @@ window.onload = function(){
         treesItems = [];
         for(var i=0; i<countX; i++){
             for(var k=0; k<countY; k++){
-                ctx.drawImage(sprite, 440, 299, 66, 100, i*distanceBtwTreesX+k*20, k*distanceBtwTreesY-i*60, 66, 100);
-                treesItems.push( new ItemData(66,100, 440,299, i*distanceBtwTreesX+k*20,k*distanceBtwTreesY-i*60) );
+                ctxBg.drawImage(sprite, 440, 299, 66, 100, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30, 66, 100);
+                treesItems.push( new ItemData(66,100, 440,299, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30) );
             }
         }
     }
@@ -221,7 +221,7 @@ window.onload = function(){
 
 
     // LOAD GAME
-    if(presenceTrees) createTrees(4,4, 200,180);
+    if(presenceTrees) createTrees(6,6, 160,140);
 
     CreateMan(manData);
 
