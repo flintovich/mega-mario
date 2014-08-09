@@ -3,6 +3,8 @@ window.onload = function(){
     var ctx = canvas.getContext('2d');
     var canvasBg = document.getElementById('texture');
     var ctxBg = canvasBg.getContext('2d');
+    var gameDataSection = document.getElementById('gameData');
+    var ctxGameData = gameDataSection.getContext('2d');
 
     // Переменные уровней
     var presenceTrees = true;
@@ -222,7 +224,24 @@ window.onload = function(){
 
     // LOAD GAME
     if(presenceTrees) createTrees(6,6, 160,140);
-
     CreateMan(manData);
+
+
+    /*******************************************
+     * game dada section
+     ******************************************/
+    function addText(ctx,text,x,y,size){
+        ctx.font = size+'px Verdana';
+        ctx.fillStyle = "#eee";
+        ctx.fillText(text,x,y, 150);
+        ctx.textAlign = "left";
+        ctx.textBaseline = "bottom";
+    }
+
+    addText(ctxGameData,'Mega Mario Game',8,30,16);
+    addText(ctxGameData,'Level:',8,70,13);
+    addText(ctxGameData,'Score:',8,90,13);
+    addText(ctxGameData,'Health:',8,110,13);
+    ctxGameData.drawImage(sprite, 373, 299, 54, 47, 100, 45, 54, 47);
 
 };

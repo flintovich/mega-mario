@@ -59,7 +59,7 @@ input {
 	vertical-align: middle;
 }
 #wrapper{
-    width: 800px;
+    width: 960px;
     height: 600px;
     margin: 20px auto 0;
     position: relative;
@@ -70,9 +70,14 @@ input {
     top:0;
     right: 0;
 }
-#canvas{
-    display: block;
+#game{
 }
 #texture{
 
+}
+#gameData{
+    right: auto;
+    left: 0;
+    width: 160px;
+    background: #444;
 }
