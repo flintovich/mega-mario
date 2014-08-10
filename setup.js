@@ -12,13 +12,15 @@ var gameApp = {
         ctx.textBaseline = "bottom";
     },
     // Конструктор для создания сущностей
-    ItemData : function (width, height, spriteX, spriteY, positionOnCanvas_X, positionOnCanvas_Y){
+    ItemData : function (width, height, positionOnCanvas_X, positionOnCanvas_Y){
         this.width = width;
         this.height = height;
-        this.spriteX = spriteX;
-        this.spriteY = spriteY;
         this.positionOnCanvas_X = positionOnCanvas_X;
         this.positionOnCanvas_Y = positionOnCanvas_Y;
+    },
+    ctx : function(){
+        var canvas = document.getElementById('game');
+        return canvas.getContext('2d');
     },
     ctxBg : function(){
         var canvasBg = document.getElementById('texture');
@@ -28,5 +30,12 @@ var gameApp = {
         var gameDataSection = document.getElementById('gameData');
         return gameDataSection.getContext('2d');
     },
-    level : 1
+    level : 1,
+    // crystals
+    crystalData : [],
+    maxCrystalCount : 20,
+
+    // score
+    gameScore : 0
+
 };

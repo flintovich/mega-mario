@@ -3,13 +3,14 @@ window.onload = function(){
     var ctx = canvas.getContext('2d');
     var canvasBg = document.getElementById('texture');
     var ctxBg = gameApp.ctxBg();
-    var gameDataSection = document.getElementById('gameData');
-    var ctxGameData = gameDataSection.getContext('2d');
+    var ctxGameData = gameApp.ctxGameData();
     function addText(ctx,text,x,y,size){
         return gameApp.addText(ctx,text,x,y,size);
     }
     // Переменные уровней
     var presenceTrees = true;
+    var maxCrystalCount = gameApp.maxCrystalCount;
+    var gameScore = gameApp.gameScore;
 
     /* Dynamic variables */
     var widthd = 16;
@@ -101,6 +102,37 @@ window.onload = function(){
 
         }
 
+        // Если уровень 1
+        if( gameApp.level == 1 ){
+            for(var d=0; d<gameApp.crystalData.length; d++){
+                // Если Марио за деревом, то отрисовываем его первого
+                if( gameApp.crystalData[d].positionOnCanvas_Y <= manData.positionOnCanvas_Y+manData.height &&
+                    gameApp.crystalData[d].positionOnCanvas_Y+gameApp.crystalData[d].height >= manData.positionOnCanvas_Y &&
+                    gameApp.crystalData[d].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
+                    gameApp.crystalData[d].positionOnCanvas_X+gameApp.crystalData[d].width >= manData.positionOnCanvas_X
+                    ){
+
+                    ctxBg.clearRect(gameApp.crystalData[d].positionOnCanvas_X,gameApp.crystalData[d].positionOnCanvas_Y,gameApp.crystalData[d].width,gameApp.crystalData[d].height);
+                    gameApp.crystalData[d] = "";
+
+                    document.getElementById('bonus').currentTime = 0 ;
+                    document.getElementById('bonus').play();
+
+                    if(presenceTrees) createTrees(6,6, 160,140);
+
+                    maxCrystalCount--;
+                    ctxGameData.clearRect(8,110,160,30);
+                    addText(ctxGameData,'Crystals: '+maxCrystalCount,8,132,13);
+
+
+                    gameScore+=5;
+                    ctxGameData.clearRect(8,70,100,27);
+                    addText(ctxGameData,'Score: '+gameScore,8,90,13);
+                    break;
+                }
+            }
+        }
+
         // Если деревья включены
         if(presenceTrees){
             // Проверка на то, что Марио находится на координатах дерева
@@ -110,12 +142,12 @@ window.onload = function(){
                     treesItems[k].positionOnCanvas_Y+treesItems[k].height >= manData.positionOnCanvas_Y &&
                     treesItems[k].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
                     treesItems[k].positionOnCanvas_X+treesItems[k].width >= manData.positionOnCanvas_X
-                    ){
+                ){
                     canvasBg.style.zIndex = 1;
-                        // Если Марио находится перед деревом
-                        if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
-                            canvasBg.style.zIndex = "";
-                        }
+                    // Если Марио находится перед деревом
+                    if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
+                        canvasBg.style.zIndex = "";
+                    }
                     break;
                 } else {
                     canvasBg.style.zIndex = "";
@@ -146,7 +178,7 @@ window.onload = function(){
         for(var i=0; i<countX; i++){
             for(var k=0; k<countY; k++){
                 ctxBg.drawImage(sprite, 440, 299, 66, 100, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30, 66, 100);
-                treesItems.push( new gameApp.ItemData(66,100, 440,299, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30) );
+                treesItems.push( new gameApp.ItemData(66,100, i*distanceBtwTreesX-k*20, k*distanceBtwTreesY-i*30) );
             }
         }
     }
@@ -227,7 +259,7 @@ window.onload = function(){
 
     addText(ctxGameData,'Mega Mario Game',8,30,16);
     addText(ctxGameData,'Level: '+gameApp.level,8,70,13);
-    addText(ctxGameData,'Score:',8,90,13);
+    addText(ctxGameData,'Score: '+gameApp.gameScore,8,90,13);
     addText(ctxGameData,'Health:',8,110,13);
     ctxGameData.drawImage(sprite, 373, 299, 54, 47, 100, 45, 54, 47);
 
