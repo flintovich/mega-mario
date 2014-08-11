@@ -292,7 +292,7 @@ window.onload = function(){
 
 
         var mapMusic = document.getElementById("map-song");
-        mapMusic.volume=0.4;
+        mapMusic.volume=0.5;
         mapMusic.play();
     }
 
