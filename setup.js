@@ -26,6 +26,11 @@ var gameApp = {
         this.positionOnCanvas_X = positionOnCanvas_X;
         this.positionOnCanvas_Y = positionOnCanvas_Y;
     },
+    sprite : function(){
+        var sprite = new Image();
+        sprite.src = 'images/sprite.png';
+        return sprite;
+    },
     // game data
     gameData : {
         level : 1,
@@ -35,5 +40,45 @@ var gameApp = {
         maxCrystalCount : 2,
         // score
         gameScore : 0
+    }
+};
+
+var gameLevels = {
+    level_1 : function(){
+        var maxCrystalCount = gameApp.gameData.maxCrystalCount;
+        var crystalsPositions = [
+            [163, 118],
+            [146, 118],
+            [129, 118],
+            [112, 118],
+            [95, 118],
+            [78, 118]
+        ];
+        for(var i=0; i<maxCrystalCount; i++){
+            var randX = gameApp.rand(10,750);
+            var randY = gameApp.rand(10,550);
+            var crystalRand = gameApp.rand(0,crystalsPositions.length-1);
+            gameApp.ctxBg().drawImage(gameApp.sprite(), crystalsPositions[crystalRand][0], 118, 13, 10, randX, randY, 16, 13);
+            gameApp.gameData.crystalData.push( new gameApp.ItemData(18,15, randX,randY) );
+        }
+    },
+    level_2 : function(){
+        gameApp.gameData.maxCrystalCount = 10;
+        var maxCrystalCount = gameApp.gameData.maxCrystalCount;
+        var crystalsPositions = [
+            [163, 118],
+            [146, 118],
+            [129, 118],
+            [112, 118],
+            [95, 118],
+            [78, 118]
+        ];
+        for(var i=0; i<maxCrystalCount; i++){
+            var randX = gameApp.rand(10,750);
+            var randY = gameApp.rand(10,550);
+            var crystalRand = gameApp.rand(0,crystalsPositions.length-1);
+            gameApp.ctxBg().drawImage(gameApp.sprite(), crystalsPositions[crystalRand][0], 118, 13, 10, randX, randY, 16, 13);
+            gameApp.gameData.crystalData.push( new gameApp.ItemData(18,15, randX,randY) );
+        }
     }
 };

@@ -1,22 +1,31 @@
 window.onload = function(){
     function startLevel(levelNumber){
         var canvas = document.getElementById('game');
-        var ctx = canvas.getContext('2d');
         var canvasBg = document.getElementById('texture');
         var ctxBg = gameApp.ctxBg();
-        //var ctxGameData = gameApp.ctxGameData();
-        function addText(ctx,text,x,y,size){
-            return gameApp.addText(ctx,text,x,y,size);
-        }
-        // Переменные уровней
+        var ctx = gameApp.ctx();
+        var gameScore;
 
+        // Переменные уровней
+        var presenceTrees = true;
+        if(presenceTrees) var treesItems = [];  // Масив с данными деревьев
+        var maxCrystalCount;
+        var crystalsData;
         // Если уровень 1
         switch (levelNumber){
             case 1:
-                var presenceTrees = true;
-                var maxCrystalCount = gameApp.gameData.maxCrystalCount;
-                var gameScore = gameApp.gameData.gameScore;
-                var crystalsData = gameApp.gameData.crystalData;
+                maxCrystalCount = gameApp.gameData.maxCrystalCount;
+                gameScore = gameApp.gameData.gameScore;
+                crystalsData = gameApp.gameData.crystalData;
+                gameLevels.level_1();
+                break;
+            case 2:
+                gameApp.gameData.maxCrystalCount = 25;
+                maxCrystalCount = gameApp.gameData.maxCrystalCount;
+                gameScore = gameApp.gameData.gameScore;
+                crystalsData = gameApp.gameData.crystalData;
+                gameLevels.level_2();
+                break;
         }
 
         /* Dynamic variables */
@@ -39,7 +48,6 @@ window.onload = function(){
         }
         /* move Mario data END*/
 
-        var treesItems = []; // Масив с данными деревьев
 
 
         window.requestAnimFrame = (function(){
@@ -110,14 +118,14 @@ window.onload = function(){
             }
 
             // Если уровень 1
-            if( gameApp.gameData.level == 1 ){
+            if( levelNumber == 1 || levelNumber == 2 ){
                 for(var d=0; d<crystalsData.length; d++){
                     // Если Марио за деревом, то отрисовываем его первого
                     if( crystalsData[d].positionOnCanvas_Y <= manData.positionOnCanvas_Y+manData.height &&
                         crystalsData[d].positionOnCanvas_Y+crystalsData[d].height >= manData.positionOnCanvas_Y &&
                         crystalsData[d].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
                         crystalsData[d].positionOnCanvas_X+crystalsData[d].width >= manData.positionOnCanvas_X
-                        ){
+                    ){
 
                         ctxBg.clearRect(crystalsData[d].positionOnCanvas_X,crystalsData[d].positionOnCanvas_Y,crystalsData[d].width,crystalsData[d].height);
                         crystalsData[d] = "";
@@ -135,8 +143,8 @@ window.onload = function(){
 
                         if(maxCrystalCount == 0){
                             gameApp.gameData.level++;
-                            startWindown.style.display = 'block';
                             modalLevel.innerHTML = gameApp.gameData.level;
+                            startWindown.style.display = 'block';
                         }
                         break;
                     }
@@ -260,6 +268,8 @@ window.onload = function(){
 
         // LOAD GAME
         if(presenceTrees) createTrees(6,6, 160,140);
+
+        ctx.clearRect(0,0,800,600);
         CreateMan(manData);
 
 
@@ -278,7 +288,10 @@ window.onload = function(){
         healthElem.innerHTML = gameApp.gameData.health;
     }
 
-    // start level
+
+    /*******************************************
+     * start level
+     ******************************************/
     var startLevelButton = document.querySelector('.start-button');
     var startWindown = document.getElementById('start-window');
     var modalLevel = document.querySelector('.modal-level');
