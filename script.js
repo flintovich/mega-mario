@@ -55,7 +55,7 @@ window.onload = function(){
                     spriteXd = positions[i][0];
                     spriteYd = positions[i][1];
                     if(positionOnMapX+manData.width>=ctx.canvas.width) return false;
-                    positionOnMapX++
+                    positionOnMapX+=2;
                 })(spriteCount,[
                         [311,122],
                         [328,122],
@@ -67,7 +67,7 @@ window.onload = function(){
                     spriteXd = positions[i][0];
                     spriteYd = positions[i][1];
                     if(positionOnMapX<=0) return false;
-                    positionOnMapX--
+                    positionOnMapX-=2;
                 })(spriteCount,[
                         [296,122],
                         [279,122],
@@ -79,7 +79,7 @@ window.onload = function(){
                     spriteXd = positions[i][0];
                     spriteYd = positions[i][1];
                     if(positionOnMapY<=0) return false;
-                    positionOnMapY--
+                    positionOnMapY-=2;
                 })(spriteCount,[
                         [410,122],
                         [427,122]
@@ -90,7 +90,7 @@ window.onload = function(){
                     spriteXd = positions[i][0];
                     spriteYd = positions[i][1];
                     if(positionOnMapY+manData.height>=ctx.canvas.height) return false;
-                    positionOnMapY++
+                    positionOnMapY+=2;
                 })(spriteCount,[
                         [385,178],
                         [402,178]
