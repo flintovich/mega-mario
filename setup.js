@@ -29,9 +29,10 @@ var gameApp = {
     // game data
     gameData : {
         level : 1,
+        health : 1,
         // crystals
         crystalData : [],
-        maxCrystalCount : 20,
+        maxCrystalCount : 2,
         // score
         gameScore : 0
     }

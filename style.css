@@ -95,7 +95,7 @@ input {
     height: 47px;
     position: absolute;
     right: 5px;
-    top: 33px;
+    top: 70px;
     background: url(images/sprite.png) no-repeat -373px -299px;
 }
 #game-data:after{
@@ -109,7 +109,7 @@ input {
 }
 #game-data h1{
     text-align: center;
-    font: bold 15px/18px Verdana, sans-serif;
+    font: bold 20px/28px Verdana, sans-serif;
     text-shadow: 1px 1px 1px #f35e4d;
     padding: 0 0 50px;
 }
@@ -119,4 +119,51 @@ input {
     padding: 5px 0;
     border-top: 1px solid #888;
     text-shadow: 1px 1px 1px #000;
+}
+.game-data span,
+.level-data span{
+    float: right;
+}
+/* start window */
+#start-window {
+    height: 450px;
+    padding: 150px 0 0;
+    position: absolute;
+    text-align: center;
+    width: 960px;
+    z-index: 5;
+
+    background: rgb(240,183,161);
+    background: -moz-linear-gradient(top,  rgba(240,183,161,1) 0%, rgba(140,51,16,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(240,183,161,1)), color-stop(100%,rgba(140,51,16,1)));
+    background: -webkit-linear-gradient(top,  rgba(240,183,161,1) 0%,rgba(140,51,16,1) 100%);
+    background: -o-linear-gradient(top,  rgba(240,183,161,1) 0%,rgba(140,51,16,1) 100%);
+    background: -ms-linear-gradient(top,  rgba(240,183,161,1) 0%,rgba(140,51,16,1) 100%);
+    background: linear-gradient(to bottom,  rgba(240,183,161,1) 0%,rgba(140,51,16,1) 100%);
+}
+
+
+#start-window .level {
+    font: bold 50px/110px Verdana, sans-serif;
+    text-shadow: 2px 2px 5px #fff;
+}
+#start-window .start-button{
+    background-color: #ed0000;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px #000 inset, 0 3px 0 1px #000, 0 6px 5px #999;
+    text-shadow: 1px 1px #000;
+    color: #fff;
+    font: bold 20px/24px Verdana, sans-serif;
+    cursor: pointer;
+    padding: 10px;
+    position: relative;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    width: 250px;
+    margin: 0 auto;
+}
+#start-window .start-button:hover{
+    background-color: #ff0000;
+    box-shadow: 0 1px 2px #000 inset, 0 1px 7px 3px #000, 0 6px 5px #999;
 }
