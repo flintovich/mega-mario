@@ -46,6 +46,7 @@ var gameApp = {
 var gameLevels = {
     level_1 : function(){
         var maxCrystalCount = gameApp.gameData.maxCrystalCount;
+        var crystalsData = gameApp.gameData.crystalData;
         var crystalsPositions = [
             [163, 118],
             [146, 118],
@@ -59,12 +60,13 @@ var gameLevels = {
             var randY = gameApp.rand(10,550);
             var crystalRand = gameApp.rand(0,crystalsPositions.length-1);
             gameApp.ctxBg().drawImage(gameApp.sprite(), crystalsPositions[crystalRand][0], 118, 13, 10, randX, randY, 16, 13);
-            gameApp.gameData.crystalData.push( new gameApp.ItemData(18,15, randX,randY) );
+            crystalsData.push( new gameApp.ItemData(18,15, randX,randY) );
         }
     },
     level_2 : function(){
-        gameApp.gameData.maxCrystalCount = 10;
+        gameApp.gameData.maxCrystalCount = 25;
         var maxCrystalCount = gameApp.gameData.maxCrystalCount;
+        var crystalsData = gameApp.gameData.crystalData;
         var crystalsPositions = [
             [163, 118],
             [146, 118],
@@ -78,7 +80,7 @@ var gameLevels = {
             var randY = gameApp.rand(10,550);
             var crystalRand = gameApp.rand(0,crystalsPositions.length-1);
             gameApp.ctxBg().drawImage(gameApp.sprite(), crystalsPositions[crystalRand][0], 118, 13, 10, randX, randY, 16, 13);
-            gameApp.gameData.crystalData.push( new gameApp.ItemData(18,15, randX,randY) );
+            crystalsData.push( new gameApp.ItemData(18,15, randX,randY) );
         }
     }
 };

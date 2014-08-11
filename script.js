@@ -4,27 +4,25 @@ window.onload = function(){
         var canvasBg = document.getElementById('texture');
         var ctxBg = gameApp.ctxBg();
         var ctx = gameApp.ctx();
-        var gameScore;
+        var gameScore = gameApp.gameData.gameScore;
 
         // Переменные уровней
         var presenceTrees = true;
         if(presenceTrees) var treesItems = [];  // Масив с данными деревьев
+
         var maxCrystalCount;
         var crystalsData;
         // Если уровень 1
         switch (levelNumber){
             case 1:
-                maxCrystalCount = gameApp.gameData.maxCrystalCount;
-                gameScore = gameApp.gameData.gameScore;
-                crystalsData = gameApp.gameData.crystalData;
                 gameLevels.level_1();
+                maxCrystalCount = gameApp.gameData.maxCrystalCount;
+                crystalsData = gameApp.gameData.crystalData;
                 break;
             case 2:
-                gameApp.gameData.maxCrystalCount = 25;
-                maxCrystalCount = gameApp.gameData.maxCrystalCount;
-                gameScore = gameApp.gameData.gameScore;
-                crystalsData = gameApp.gameData.crystalData;
                 gameLevels.level_2();
+                maxCrystalCount = gameApp.gameData.maxCrystalCount;
+                crystalsData = gameApp.gameData.crystalData;
                 break;
         }
 
@@ -145,6 +143,11 @@ window.onload = function(){
                             gameApp.gameData.level++;
                             modalLevel.innerHTML = gameApp.gameData.level;
                             startWindown.style.display = 'block';
+
+                            gameApp.gameData.gameScore = gameScore;
+
+                            document.getElementById('level-ok').currentTime = 0 ;
+                            document.getElementById('level-ok').play();
                         }
                         break;
                     }
@@ -286,6 +289,11 @@ window.onload = function(){
         levelElem.innerHTML = gameApp.gameData.level;
         scoreElem.innerHTML = gameApp.gameData.gameScore;
         healthElem.innerHTML = gameApp.gameData.health;
+
+
+        var mapMusic = document.getElementById("map-song");
+        mapMusic.volume=0.4;
+        mapMusic.play();
     }
 
 
