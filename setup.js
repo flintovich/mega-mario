@@ -1,4 +1,12 @@
 var gameApp = {
+    ctx : function(){
+        var canvas = document.getElementById('game');
+        return canvas.getContext('2d');
+    },
+    ctxBg : function(){
+        var canvasBg = document.getElementById('texture');
+        return canvasBg.getContext('2d');
+    },
     rand : function (min, max){
         min = parseInt(min);
         max = parseInt(max);
@@ -18,24 +26,13 @@ var gameApp = {
         this.positionOnCanvas_X = positionOnCanvas_X;
         this.positionOnCanvas_Y = positionOnCanvas_Y;
     },
-    ctx : function(){
-        var canvas = document.getElementById('game');
-        return canvas.getContext('2d');
-    },
-    ctxBg : function(){
-        var canvasBg = document.getElementById('texture');
-        return canvasBg.getContext('2d');
-    },
-    ctxGameData : function(){
-        var gameDataSection = document.getElementById('gameData');
-        return gameDataSection.getContext('2d');
-    },
-    level : 1,
-    // crystals
-    crystalData : [],
-    maxCrystalCount : 20,
-
-    // score
-    gameScore : 0
-
+    // game data
+    gameData : {
+        level : 1,
+        // crystals
+        crystalData : [],
+        maxCrystalCount : 20,
+        // score
+        gameScore : 0
+    }
 };

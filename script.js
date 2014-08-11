@@ -3,14 +3,20 @@ window.onload = function(){
     var ctx = canvas.getContext('2d');
     var canvasBg = document.getElementById('texture');
     var ctxBg = gameApp.ctxBg();
-    var ctxGameData = gameApp.ctxGameData();
+    //var ctxGameData = gameApp.ctxGameData();
     function addText(ctx,text,x,y,size){
         return gameApp.addText(ctx,text,x,y,size);
     }
     // Переменные уровней
-    var presenceTrees = true;
-    var maxCrystalCount = gameApp.maxCrystalCount;
-    var gameScore = gameApp.gameScore;
+
+    // Если уровень 1
+    switch (gameApp.gameData.level){
+        case 1:
+            var presenceTrees = true;
+            var maxCrystalCount = gameApp.gameData.maxCrystalCount;
+            var gameScore = gameApp.gameData.gameScore;
+            var crystalsData = gameApp.gameData.crystalData;
+    }
 
     /* Dynamic variables */
     var widthd = 16;
@@ -103,17 +109,17 @@ window.onload = function(){
         }
 
         // Если уровень 1
-        if( gameApp.level == 1 ){
-            for(var d=0; d<gameApp.crystalData.length; d++){
+        if( gameApp.gameData.level == 1 ){
+            for(var d=0; d<crystalsData.length; d++){
                 // Если Марио за деревом, то отрисовываем его первого
-                if( gameApp.crystalData[d].positionOnCanvas_Y <= manData.positionOnCanvas_Y+manData.height &&
-                    gameApp.crystalData[d].positionOnCanvas_Y+gameApp.crystalData[d].height >= manData.positionOnCanvas_Y &&
-                    gameApp.crystalData[d].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
-                    gameApp.crystalData[d].positionOnCanvas_X+gameApp.crystalData[d].width >= manData.positionOnCanvas_X
+                if( crystalsData[d].positionOnCanvas_Y <= manData.positionOnCanvas_Y+manData.height &&
+                    crystalsData[d].positionOnCanvas_Y+crystalsData[d].height >= manData.positionOnCanvas_Y &&
+                    crystalsData[d].positionOnCanvas_X <= manData.positionOnCanvas_X+manData.width &&
+                    crystalsData[d].positionOnCanvas_X+crystalsData[d].width >= manData.positionOnCanvas_X
                     ){
 
-                    ctxBg.clearRect(gameApp.crystalData[d].positionOnCanvas_X,gameApp.crystalData[d].positionOnCanvas_Y,gameApp.crystalData[d].width,gameApp.crystalData[d].height);
-                    gameApp.crystalData[d] = "";
+                    ctxBg.clearRect(crystalsData[d].positionOnCanvas_X,crystalsData[d].positionOnCanvas_Y,crystalsData[d].width,crystalsData[d].height);
+                    crystalsData[d] = "";
 
                     document.getElementById('bonus').currentTime = 0 ;
                     document.getElementById('bonus').play();
@@ -121,13 +127,10 @@ window.onload = function(){
                     if(presenceTrees) createTrees(6,6, 160,140);
 
                     maxCrystalCount--;
-                    ctxGameData.clearRect(8,110,160,30);
-                    addText(ctxGameData,'Crystals: '+maxCrystalCount,8,132,13);
-
+                    crystalsElem.innerHTML = maxCrystalCount;
 
                     gameScore+=5;
-                    ctxGameData.clearRect(8,70,100,27);
-                    addText(ctxGameData,'Score: '+gameScore,8,90,13);
+                    scoreElem.innerHTML = gameScore;
                     break;
                 }
             }
@@ -258,10 +261,19 @@ window.onload = function(){
      ******************************************/
 
 
-    addText(ctxGameData,'Mega Mario Game',8,30,16);
+    /*addText(ctxGameData,'Mega Mario Game',8,30,16);
     addText(ctxGameData,'Level: '+gameApp.level,8,70,13);
     addText(ctxGameData,'Score: '+gameApp.gameScore,8,90,13);
     addText(ctxGameData,'Health:',8,110,13);
-    ctxGameData.drawImage(sprite, 373, 299, 54, 47, 100, 45, 54, 47);
+    ctxGameData.drawImage(sprite, 373, 299, 54, 47, 100, 45, 54, 47);*/
+
+    var levelElem = document.getElementById('level');
+    var crystalsElem = document.getElementById('crystals');
+    var scoreElem = document.getElementById('score');
+
+    crystalsElem.innerHTML = gameApp.gameData.maxCrystalCount;
+    levelElem.innerHTML = gameApp.gameData.level;
+    scoreElem.innerHTML = gameApp.gameData.gameScore;
+
 
 };
