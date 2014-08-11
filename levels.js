@@ -23,7 +23,7 @@ window.addEventListener("load", function(){
             var randX = gameApp.rand(10,750);
             var randY = gameApp.rand(10,550);
             var crystalRand = gameApp.rand(0,crystalsPositions.length-1);
-            ctxBg.drawImage(sprite, crystalsPositions[crystalRand][0], 118, 13, 10, randX, randY, 18, 15);
+            ctxBg.drawImage(sprite, crystalsPositions[crystalRand][0], 118, 13, 10, randX, randY, 16, 13);
             gameApp.crystalData.push( new gameApp.ItemData(18,15, randX,randY) );
         }
         addText(ctxGameData,'Crystals: '+maxCrystalCount,8,130,13);
