@@ -144,6 +144,7 @@ window.onload = function(){
                     treesItems[k].positionOnCanvas_X+treesItems[k].width >= manData.positionOnCanvas_X
                 ){
                     canvasBg.style.zIndex = 1;
+                    CreateMan(manData);
                     // Если Марио находится перед деревом
                     if( manData.positionOnCanvas_Y+manData.height >= treesItems[k].positionOnCanvas_Y+treesItems[k].height ){
                         canvasBg.style.zIndex = "";
